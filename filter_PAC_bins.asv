@@ -1,0 +1,19 @@
+function [amp_vector, phase_vector] = filter_PAC_bins(signal, FreqVector, Bandwidth, Fs)
+Generate matrices 
+
+%}
+PhaseFreqVector = 0:0.5:12 ;
+AmpFreqVector = 0:2.5:160;
+PhaseFreq_BandWidth = 0.5;
+AmpFreq_BandWidth = 2.5;
+
+
+
+FreqTransform = zeros(length(FreqVector), length(signal));
+for i = 1:length(FreqVector)
+    Af1 = FreqTransform(i); % Amplitude frequency start
+    Af2 = Af1 + AmpFreq_BandWidth; % amplitude frequency end
+    AmpFreq = eegfilt(amp_signal', Fs, Af1, Af2); % just filtering
+    amp_vector(i, :) = abs(hilbert(AmpFreq)); % getting the amplitude envelope
+end
+end
