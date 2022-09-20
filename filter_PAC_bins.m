@@ -17,7 +17,7 @@ Returns:
 
 FreqTransform = zeros(length(FreqVector), length(signal));
 for i = 1:length(FreqVector)
-    Af1 = FreqTransform(i); % Amplitude frequency start
+    Af1 = FreqVector(i); % Amplitude frequency start
     Af2 = Af1 + bandwidth; % amplitude frequency end
     Freq = eegfilt(signal', Fs, Af1, Af2); % just filtering
     FreqTransform(i, :) = abs(hilbert(Freq)); % getting the amplitude envelope
