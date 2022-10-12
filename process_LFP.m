@@ -21,7 +21,7 @@ kernel = gaussian(0.01*Fs, ceil(8*0.01*Fs));
 
 
 Pyramidal_Layer = LFP(:,chans(animal));
-Radiatum = LFP(:,chans(animal)-4);
+Radiatum = LFP(:,chans(animal)-3);
 
 pyr = BPfilter( Pyramidal_Layer,Fs,150,250).^2; % filter for SWR (150-250 Hz) and square
 %pyr = smoothvect(SWR_PL, kernel);
