@@ -1,9 +1,14 @@
-
 function [d] = calculate_theta_state(times,d,side)
-% This function takes in a struct with two fields, start and end
-% and calculates length of state (HTD), ratio of HTD to LTD, and
-% number of states
+%{ 
+This function takes in a struct with two fields, start and end
+and calculates length of state (HTD), ratio of HTD to LTD, and
+number of states
 
+Args:
+    times (struct): List of start and end times in seconds
+    d(struct): struct containing features of TD states
+    side (char): L or R depending on hemisphere side
+%}
 % initialize state length storage variables
 htd = [];
 ltd = [];
