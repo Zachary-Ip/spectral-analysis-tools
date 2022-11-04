@@ -47,14 +47,14 @@ end
 end
 
 function out = conversion(in)
-switch in
-    case 1
-        out = 0.85;
-    case 2
-        out = 1.15;
-    case 3 
-        out = 1.85;
-    case 4
-        out = 2.15;
-end
+    switch in
+        case 1
+            out = 0.85;
+        case 2
+            out = 1.15;
+        case 3 
+            out = 1.85;
+        case 4
+            out = 2.15;
+    end
 end
