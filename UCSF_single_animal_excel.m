@@ -1,5 +1,6 @@
-function single_animal_excel(data)
+function UCSF_single_animal_excel(data, name,cwd)
 % Calculate CSD values
+
 high_chan = 7; %pyramidal channel
 low_chan = 11; % Radiatum channel
 pre_win = 1:550; % pre indices
@@ -21,15 +22,18 @@ output(2,1) = data.SE;
 output(3:5,1:7) = data.PLI;
 output(6:8,1:7) = data.Coh;
 output(9,:) = data.gamma;
-output(10,:) = data.events(1,:);
-output(11,:) = data.events(2,:);
+output(10,:) = data.dur;
+output(11,:) = data.IRI;
 output(12,:) = dipole_pre;
 output(13,:) = dipole;
 output(14,:) = dipole_post;
 
 % Save excel file
-date = string(datetime('now'));
+Datetime = string(datetime('now'));
+cd('C:\COM\ePhy\dbdb\Data\Outputs\Data\SingleAnimal');
+Filename = sprintf([name '_data_%s.xlsx'], Datetime);
+Filename = regexprep(Filename, {' ', ':', '-'}, {'_', '_', '_'});
+xlswrite(Filename, output);
 
 
-
-end
+%end
