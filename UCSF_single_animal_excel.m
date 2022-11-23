@@ -12,8 +12,7 @@ post_win = 850:1300; % post indices
 output = NaN(14, length(data.gamma));
 
 % Format data
-output(1, 1) = data.SS(1);
-output(1, 2) = data.SS(2);
+output(1, 1:3) = data.SS;
 output(2, 1:3) = data.SE;
 output(3:5, 1:7) = data.PLI;
 output(6:8, 1:7) = data.Co;
