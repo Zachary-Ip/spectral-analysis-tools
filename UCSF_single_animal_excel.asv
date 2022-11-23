@@ -23,12 +23,12 @@ if ~isempty(data.CSD)
     dipole_pre = calculate_CSD_dipole(data.CSD, high_chan, low_chan, pre_win);
     dipole_post = calculate_CSD_dipole(data.CSD, high_chan, low_chan, post_win);
     dipole = calculate_CSD_dipole(data.CSD, high_chan, low_chan, win);
-    output(9, 1:length(data.gamma)) = data.gamma;
-    output(10, 1:length(data.dur)) = data.dur;
+    output(9, 1:length(data.IRI)) = data.gamma;
+    output(10, 1:length(data.IRI)) = data.dur;
     output(11, 1:length(data.IRI)) = data.IRI;
-    output(12, 1:length(dipole_pre)) = dipole_pre;
-    output(13, 1:length(dipole)) = dipole;
-    output(14, 1:length(dipole_post)) = dipole_post;
+    output(12, 1:length(data.IRI)) = dipole_pre;
+    output(13, 1:length(data.IRI)) = dipole;
+    output(14, :) = dipole_post;
 end
 % Save excel file
 return_path = pwd;
