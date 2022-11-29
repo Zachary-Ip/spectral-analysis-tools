@@ -7,7 +7,6 @@ pre_win = 1:550; % pre indices
 win = 650:750; % ripple indices
 post_win = 850:1300; % post indices
 
-
 % generate storage figure to write to excel
 output = NaN(14, length(data.gamma));
 
@@ -39,8 +38,8 @@ else
 end
 Filename = sprintf([name, '_data_%s.xlsx'], Datetime);
 Filename = regexprep(Filename, {' ', ':', '-'}, {'_', '_', '_'});
-xlswrite(Filename, output);
-
+%xlswrite(Filename, output);
+save([name '_data'],'output');
 cd(return_path)
 
 %end
