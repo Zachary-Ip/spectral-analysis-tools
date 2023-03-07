@@ -16,11 +16,9 @@ xlabels = {'200d','400d'};
 b= bar(data);
 set(gca,'xTickLabel',xlabels)
 hold on
-er = errorbar([0.85 1.15; 1.85 2.15]',data', Error');
+er = errorbar([0.85 1.15 1.85 2.15]',data', Error');
 er(1).LineStyle = 'none';
-er(2).LineStyle = 'none';
 er(1).Color = 'k';
-er(2).Color = 'k';
 % er(1).Color(2,:) = blue;
 % er(2).Color(1,:) = red;
 % er(2).Color(2,:) = blue;
@@ -28,18 +26,12 @@ box off
 set(gca,'FontWeight','bold', 'FontSize',14,'LineWidth',2,'TickDir','out');
 
 b(1).FaceColor = 'flat';
-b(2).FaceColor = 'flat';
 b(1).EdgeColor = 'flat';
-b(2).EdgeColor = 'flat';
 b(1).CData(1,:) = blue;
-b(2).CData(1,:) = red;
 b(1).CData(2,:) = blue;
-b(2).CData(2,:) = red;
 for i = 1:size(P,1)
-    a = conversion(P(i,1));
-    b = conversion(P(i,2));
    if P(i,6) <= 0.05
-       sigstar2([a b],P(i,6));
+       sigstar2([P(i,1) P(i,2)],P(i,6));
    end 
 end
 

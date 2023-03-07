@@ -1,49 +1,24 @@
-function [d] = calculate_theta_state(times,d,side)
-%{ 
-This function takes in a struct with two fields, start and end
-and calculates length of state (HTD), ratio of HTD to LTD, and
-number of states
+function [idx, signal] = calculate_theta_state(Theta, Delta)
+Fs = 1250;
+SMOOTHING = 1; %300ms
+KERNEL = gaussian(SMOOTHING*Fs, ceil(8*SMOOTHING*Fs));
+KERNEL2 = gaussian(10*SMOOTHING*Fs, ceil(80*SMOOTHING*Fs));
+THRESH = 0.5;
+MINDUR = 10; 
 
-Args:
-    times (struct): List of start and end times in seconds
-    d(struct): struct containing features of TD states
-    side (char): L or R depending on hemisphere side
-%}
-% initialize state length storage variables
-htd = [];
-ltd = [];
+H_Theta = abs(hilbert(Theta));
+H_Delta = abs(hilbert(Delta));
 
-% Calculate state length
-for iT = 1:length(times.start)
-    % subtract end time (i) from start time (i) to find each length
-    % of on state
-    htd = [htd (times.end(iT)-times.start(iT))];
-    
-    % subtract start time (i) from end time (i-1) to find each length
-    % of off state. At i = 1, start at 0.
-    if iT == 1
-        ltd = ltd + times.start(iT);
-    else
-        ltd = [ltd (times.start(iT) - times.end(iT-1))];
-    end
-end
+S_Theta = smoothvect(H_Theta, KERNEL);
+S_Delta = smoothvect(H_Delta, KERNEL);
 
-perc = sum(htd)/(sum(htd)+sum(ltd));
-if length(times.start) == length(times.end)
-    s = length(times.start);
-else
-    disp('Start and end lengths differ');
-end
-switch side
-    case 'L'
-        d.lNum = [d.lNum s];
-        d.lHtd = [d.lHtd htd];
-        d.lLtd = [d.lLtd ltd];
-        d.lR   = [d.lR   perc];
-    case 'R'
-        d.rNum = [d.rNum s];
-        d.rHtd = [d.rHtd htd];
-        d.rLtd = [d.rLtd ltd];
-        d.rR   = [d.rR   perc];
-end
+Theta_Delta = S_Theta./S_Delta;
+signal  = smoothvect(Theta_Delta, KERNEL2);
+% in sec, standard 10
+disp('making index')
+High_C = find(signal > THRESH);
+crossings_C = find(Fs*MINDUR < diff(High_C) );
+
+idx = [0 High_C(crossings_C+1)'; High_C(crossings_C)' High_C(end)];
+
 end

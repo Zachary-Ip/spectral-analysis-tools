@@ -17,15 +17,16 @@ Returns:
     
 %}
 Fs = 1250;
-kernel = gaussian(0.01*Fs, ceil(8*0.01*Fs));
+window = 0.01;
+kernel = gaussian(window*Fs, ceil(8*window*Fs));
 
 
 Pyramidal_Layer = LFP(:,chans(animal));
 Radiatum = LFP(:,chans(animal)-4);
 
 pyr = BPfilter( Pyramidal_Layer,Fs,150,250).^2; % filter for SWR (150-250 Hz) and square
-%pyr = smoothvect(SWR_PL, kernel);
+pyr = smoothvect(pyr, kernel);
 
 rad = BPfilter(Radiatum,1250,8,40);
-%rad = smoothvect(SPW, kernel);
+rad = smoothvect(rad, kernel);
 end
